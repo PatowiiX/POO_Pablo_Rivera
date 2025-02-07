@@ -1,12 +1,14 @@
 package vista;
 
 import controlador.BibliotecaC;
+import modelo.Language;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class BibliotecaV {
 
-    private BibliotecaC controlador;
-    private Scanner scanner;
+    private final BibliotecaC controlador;
+    private final Scanner scanner;
 
     public BibliotecaV(BibliotecaC controlador) {
         this.controlador = controlador;
@@ -15,17 +17,27 @@ public class BibliotecaV {
 
     public void mostrarMenu() {
         while (true) {
-            System.out.println("=== Sistema de Gestión de Biblioteca ===");
-            System.out.println("1. Agregar Libro");
-            System.out.println("2. Agregar Usuario");
-            System.out.println("3. Realizar Préstamo");
-            System.out.println("4. Generar Reporte");
-            System.out.println("5. Salir");
-            System.out.print("Seleccione una opción: ");
+            System.out.println("=== " + Language.getMenuMessage() + " ===");
+            System.out.println("1. " + Language.getAddBookOption());
+            System.out.println("2. " + Language.getAddUserOption());
+            System.out.println("3. " + Language.getLoanOption());
+            System.out.println("4. " + Language.getReportOption());
+            System.out.println("5. " + Language.getExitOption());
+            System.out.print(Language.getSelectOptionMessage() + ": ");
 
-            int opcion = scanner.nextInt();
+            int opcion = 0;
+            boolean validInput = false;
+            while (!validInput) {
+                try {
+                    opcion = scanner.nextInt();
+                    validInput = true;
+                } catch (InputMismatchException e) {
+                    System.out.println(Language.getInvalidOptionMessage());
+                    scanner.nextLine();
+                    System.out.print(Language.getSelectOptionMessage() + ": ");
+                }
+            }
             scanner.nextLine();
-
             switch (opcion) {
                 case 1:
                     agregarLibro();
@@ -40,58 +52,60 @@ public class BibliotecaV {
                     generarReporte();
                     break;
                 case 5:
-                    System.out.println("Saliendo...");
+                    System.out.println(Language.getExitMessage());
                     return;
                 default:
-                    System.out.println("Opción no válida. Intente de nuevo.");
+                    System.out.println(Language.getInvalidOptionMessage());
             }
         }
     }
 
     private void agregarLibro() {
-        System.out.print("Ingrese ID del libro: ");
+        System.out.print(Language.getEnterBookIdMessage());
         int id = scanner.nextInt();
-        scanner.nextLine(); // Limpiar el buffer
-        System.out.print("Ingrese título del libro: ");
+        scanner.nextLine();
+        System.out.print(Language.getEnterBookTitleMessage());
         String titulo = scanner.nextLine();
-        System.out.print("Ingrese autor del libro: ");
+        System.out.print(Language.getEnterBookAuthorMessage());
         String autor = scanner.nextLine();
-        System.out.print("Ingrese año de publicación del libro: ");
-        int anioPublicacion = scanner.nextInt();
+        System.out.print(Language.getEnterPublicationYearMessage());
+        int anoPublicacion = scanner.nextInt();
+        scanner.nextLine();
 
-        controlador.agregarLibro(id, titulo, autor, anioPublicacion);
-        System.out.println("Libro agregado exitosamente.");
+        controlador.agregarLibro(id, titulo, autor, anoPublicacion);
+        System.out.println(Language.getBookAddedMessage());
     }
 
     private void agregarUsuario() {
-        System.out.print("Ingrese ID del usuario: ");
+        System.out.print(Language.getEnterUserIdMessage());
         int id = scanner.nextInt();
-        scanner.nextLine(); // Limpiar el buffer
-        System.out.print("Ingrese nombre del usuario: ");
+        scanner.nextLine();
+        System.out.print(Language.getEnterUserNameMessage());
         String nombre = scanner.nextLine();
-        System.out.print("Ingrese email del usuario: ");
+        System.out.print(Language.getEnterUserEmailMessage());
         String email = scanner.nextLine();
         controlador.agregarUsuario(id, nombre, email);
-        System.out.println("Usuario agregado exitosamente.");
+        System.out.println(Language.getUserAddedMessage());
     }
 
     private void realizarPrestamo() {
-        System.out.print("Ingrese ID del libro a prestar: ");
+        System.out.print(Language.getEnterBookLoanIdMessage());
         int idLibro = scanner.nextInt();
-        System.out.print("Ingrese ID del usuario: ");
+        System.out.print(Language.getEnterUserIdMessage());
         int idUsuario = scanner.nextInt();
+        scanner.nextLine();
+
         if (controlador.realizarPrestamo(idLibro, idUsuario)) {
-            System.out.println("Préstamo realizado exitosamente.");
+            System.out.println(Language.getLoanSuccessMessage());
         } else {
-            System.out.println("No se pudo realizar el préstamo. Verifique la disponibilidad del libro y el número de préstamos activos del usuario.");
+            System.out.println(Language.getLoanFailureMessage());
         }
     }
-    private void generarReporte(){
-        System.out.println("Reporte de Biblioteca:");
-        System.out.println("Total de libros:" + controlador.getTotalLibros()) ;
-        System.out.println("Total de usuarios:"+controlador.getTotalUsuarios());
-        System.out.println("Total de prestamos:"+controlador.getTotalPrestamos());
 
+    private void generarReporte() {
+        System.out.println(Language.getReportTitle());
+        System.out.println(Language.getTotalBooksMessage() + controlador.getTotalLibros());
+        System.out.println(Language.getTotalUsersMessage() + controlador.getTotalUsuarios());
+        System.out.println(Language.getTotalLoansMessage() + controlador.getTotalPrestamos());
     }
-
 }
