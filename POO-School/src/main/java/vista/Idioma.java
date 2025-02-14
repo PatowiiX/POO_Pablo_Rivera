@@ -1,0 +1,54 @@
+package vista;
+public interface Idioma {
+    String getMenuPrincipal();
+    String getAgregarProfesor();
+    String getEliminarProfesor();
+    String getAgregarAlumno();
+    String getEliminarAlumno();
+    String getCalcularPagos();
+    String getMostrarAlumnos();
+    String getMostrarProfesores();
+    String getMostrarCursos();
+    String getAgregarCurso();
+    String getAgregarAlumnoACurso();
+    String getAgregarProfesorACurso();
+    String getAsignarMateriaAProfesor();
+    String getSalir();
+    String getOpcionNoValida();
+
+    // Nuevos métodos para textos adicionales
+    String getSeleccioneOpcion();
+    String getSalirMensaje();
+    String getNoProfesores();
+    String getIngreseNombreProfesor();
+    String getIngreseNumNomina();
+    String getProfesorAgregado();
+    String getIngreseNumNominaEliminar();
+    String getProfesorEliminado();
+    String getProfesorNoEncontrado();
+    String getIngreseMatriculaAlumno();
+    String getIngreseNombreAlumno();
+    String getIngreseEdadAlumno();
+    String getEdadNoValida();
+    String getAlumnoAgregado();
+    String getIngreseMatriculaEliminar();
+    String getAlumnoEliminado();
+    String getAlumnoNoEncontrado();
+    String getSeleccioneProfesor();
+    String getIndiceNoValido();
+    String getIndiceProfesorNoValido();
+    String getIngreseNombreMateria();
+    String getIngreseClaveMateria();
+    String getIngreseCreditosMateria();
+    String getIngreseHorasSemanales();
+    String getMateriaAsignada();
+    String getDatosNoValidos();
+    String getIngreseNombreCurso();
+    String getMateria();
+    String getCursoAgregado();
+    String getSeleccioneCurso();
+    String getAlumnoAgregadoCurso();
+    String getNoMasAlumnos();
+    String getIndiceCursoNoValido();
+    String getProfesorAgregadoCurso();
+}
